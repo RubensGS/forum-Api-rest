@@ -1,4 +1,4 @@
-package br.com.souza.forum.model
+package br.com.souza.forum.models
 
 import java.time.LocalDateTime
 
