@@ -1,6 +1,6 @@
 package br.com.souza.forum.dto
 
-import br.com.souza.forum.models.StatusTopico
+import br.com.souza.forum.model.StatusTopico
 import java.time.LocalDateTime
 
 data class TopicoView (

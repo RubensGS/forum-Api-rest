@@ -1,4 +1,4 @@
-package br.com.souza.forum.models
+package br.com.souza.forum.model
 
 enum class StatusTopico {
 

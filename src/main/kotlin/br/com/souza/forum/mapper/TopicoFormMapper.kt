@@ -1,9 +1,9 @@
-package br.com.souza.forum.mappers
+package br.com.souza.forum.mapper
 
 import br.com.souza.forum.dto.NovoTopicoForm
-import br.com.souza.forum.models.Topico
-import br.com.souza.forum.services.CursoService
-import br.com.souza.forum.services.UsuarioService
+import br.com.souza.forum.model.Topico
+import br.com.souza.forum.service.CursoService
+import br.com.souza.forum.service.UsuarioService
 import org.springframework.stereotype.Component
 
 @Component

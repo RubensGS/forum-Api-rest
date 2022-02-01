@@ -1,4 +1,4 @@
-package br.com.souza.forum.controllers
+package br.com.souza.forum.controller
 
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping

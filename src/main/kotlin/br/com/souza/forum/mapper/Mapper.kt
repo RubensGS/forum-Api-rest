@@ -1,4 +1,4 @@
-package br.com.souza.forum.mappers
+package br.com.souza.forum.mapper
 
 interface Mapper<T, U> {
 
