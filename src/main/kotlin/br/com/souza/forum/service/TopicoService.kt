@@ -8,6 +8,8 @@ import br.com.souza.forum.mapper.TopicoFormMapper
 import br.com.souza.forum.mapper.TopicoViewMapper
 import br.com.souza.forum.model.Topico
 import br.com.souza.forum.repository.TopicoRepository
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import java.util.stream.Collectors
 import kotlin.collections.ArrayList
@@ -20,15 +22,13 @@ class TopicoService(
     private val notFoundMessage: String = "Topico não encontrado!"
 ) {
 
-    fun listar(nomeCurso: String?): List<TopicoView> {
+    fun listar(nomeCurso: String?, paginacao: Pageable): Page<TopicoView> {
         val topicos = if (nomeCurso == null) {
-            repository.findAll()
+            repository.findAll(paginacao)
         } else {
-            repository.findByCursoNome(nomeCurso)
+            repository.findByCursoNome(nomeCurso, paginacao)
         }
-        return repository.findAll().stream().map { topico ->
-            topicoViewMapper.map(topico)
-        }.collect(Collectors.toList())
+        return topicos.map { topico -> topicoViewMapper.map(topico) }
     }
 
     fun buscarPorId(id: Long): TopicoView {
