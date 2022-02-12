@@ -2,6 +2,7 @@ package br.com.souza.forum.service
 
 import br.com.souza.forum.dto.AtualizacaoTopicoForm
 import br.com.souza.forum.dto.NovoTopicoForm
+import br.com.souza.forum.dto.TopicoPorCategoriaDto
 import br.com.souza.forum.dto.TopicoView
 import br.com.souza.forum.exception.NotFoundException
 import br.com.souza.forum.mapper.TopicoFormMapper
@@ -54,5 +55,9 @@ class TopicoService(
 
     fun deletar(id: Long) {
         repository.deleteById(id)
+    }
+
+    fun relatorio(): List<TopicoPorCategoriaDto> {
+        return repository.relatorio()
     }
 }
