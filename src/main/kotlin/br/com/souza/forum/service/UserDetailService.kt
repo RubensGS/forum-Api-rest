@@ -9,7 +9,7 @@ class UserDetailService(
     private val usuario: Usuario
 ) : UserDetails {
 
-    override fun getAuthorities() = null
+    override fun getAuthorities() = usuario.role
 
     override fun getPassword() = usuario.password
 
