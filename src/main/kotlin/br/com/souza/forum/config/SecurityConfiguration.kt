@@ -1,7 +1,10 @@
 package br.com.souza.forum.config
 
+import br.com.souza.forum.security.JWTAuthenticationFilter
+import br.com.souza.forum.security.JWTLoginFilter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -9,24 +12,31 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+import org.springframework.web.filter.OncePerRequestFilter
 
 @Configuration
 @EnableWebSecurity
 class SecurityConfiguration(
-    private val userDetailService: UserDetailsService
+    private val userDetailService: UserDetailsService,
+    private val jwtUtils: JwtUtils
 ) : WebSecurityConfigurerAdapter() {
 
     override fun configure(http: HttpSecurity?) {
         http?.
         authorizeRequests()?.
-        antMatchers("/topicos")?.hasAuthority("LEITURA_ESCRITA")?.
+        //antMatchers("/topicos")?.hasAuthority("LEITURA_ESCRITA")?.
+        antMatchers(HttpMethod.POST,"/login")?.permitAll()?.
         anyRequest()?.
         authenticated()?.
-        and()?.
-        sessionManagement()?.sessionCreationPolicy(SessionCreationPolicy.STATELESS)?.
-        and()?.
-        formLogin()?.disable()?.
-        httpBasic()
+        and()
+        http?.addFilterBefore(
+            JWTLoginFilter(
+            authManager = authenticationManager(),
+            jwtUtil = jwtUtils),
+            UsernamePasswordAuthenticationFilter().javaClass)
+        http?.addFilterBefore(JWTAuthenticationFilter(jwtUtils = jwtUtils), OncePerRequestFilter::class.java)
+        http?.sessionManagement()?.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
     }
 
     override fun configure(auth: AuthenticationManagerBuilder?) {
