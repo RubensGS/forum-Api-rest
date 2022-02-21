@@ -9,7 +9,7 @@
         <module name="forum" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
+    <bytecodeTargetLevel target="11">
       <module name="forum" target="11" />
     </bytecodeTargetLevel>
   </component>
